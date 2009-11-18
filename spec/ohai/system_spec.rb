@@ -91,7 +91,8 @@ end
 
 describe Ohai::System, "require_plugin" do
   tmp = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || '/tmp'
-
+  tmp = tmp.dup.gsub("\\", '/')
+  
   before(:each) do
     @plugin_path = Ohai::Config[:plugin_path]
     Ohai::Config[:plugin_path] = ["#{tmp}/plugins"]
