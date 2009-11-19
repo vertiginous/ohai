@@ -66,4 +66,29 @@ describe Ohai::System, "plugin os" do
       @ohai[:os].should == "solaris2"
     end
   end
+  
+  describe "on windows" do
+    describe "on mingw32" do
+      before do
+        @ohai[:languages][:ruby][:host_os] = "mingw32"
+      end
+      
+      it "sets the os to windows" do
+        @ohai._require_plugin("os")
+        @ohai[:os].should == "windows"
+      end
+    end
+    
+    describe "on mswin32" do
+      before do
+        @ohai[:languages][:ruby][:host_os] = "mswin32"
+      end
+      
+      it "sets the os to windows" do
+        @ohai._require_plugin("os")
+        @ohai[:os].should == "windows"
+      end
+    end
+  end
+  
 end
