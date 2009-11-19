@@ -31,8 +31,8 @@ disks.each do |disk|
     disk.properties_.each do |p|
       ld_info[filesystem][p.name.wmi_underscore.to_sym] = disk[p.name]
     end
-    fs[filesystem][:kb_size] = ld_info[filesystem][:size].to_i / 1000
-    fs[filesystem][:kb_available] = ld_info[filesystem][:free_space].to_i / 1000
+    fs[filesystem][:kb_size] = ld_info[filesystem][:size].to_i / 1024
+    fs[filesystem][:kb_available] = ld_info[filesystem][:free_space].to_i / 1024
     fs[filesystem][:kb_used] = fs[filesystem][:kb_size].to_i - fs[filesystem][:kb_available].to_i
     fs[filesystem][:percent_used]  = (fs[filesystem][:kb_size].to_i != 0 ? fs[filesystem][:kb_used].to_i * 100 / fs[filesystem][:kb_size].to_i : 0)
     fs[filesystem][:mount] = ld_info[filesystem][:name]
