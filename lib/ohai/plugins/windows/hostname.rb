@@ -17,9 +17,16 @@
 #
 
 require 'ruby-wmi'
-require 'socket'
+
+provides "hostname", "fqdn"
 
 host = WMI::Win32_ComputerSystem.find(:first)
+
 hostname "#{host.Name}"
-#hostname "#{Socket.gethostname}"
-fqdn "#{Socket.gethostbyname(Socket.gethostname).first}"
+
+if host.Domain.empty?
+  Ohai::Log.debug("WMI::Win32_ComputerSystem#Domain is empty, probably no domain is set")
+  return nil
+else
+  fqdn "#{host.Name}.#{host.Domain}"
+end
